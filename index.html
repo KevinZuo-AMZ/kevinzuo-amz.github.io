@@ -3,19 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <title>AMZ Manager-ZK</title>
 <style>
 html,body{margin:0;height:100%;background:#0b1220;color:#e8edf5;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif}
-#ld{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;z-index:9999}
+#ld{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
 #ld .spin{width:42px;height:42px;border:3px solid rgba(255,255,255,.15);border-top-color:#4da3ff;border-radius:50%;animation:ldsp 1s linear infinite}
 @keyframes ldsp{to{transform:rotate(360deg)}}
-#ldt{font-size:14px;opacity:.9}
-#ldp{font-size:12px;opacity:.65;display:none}
+#ldt{font-size:14px;opacity:.85}
 </style>
 </head>
 <body>
-<div id="ld"><div class="spin"></div><div id="ldt">正在打开看板…</div><div id="ldp"></div></div>
+<div id="ld"><div class="spin"></div><div id="ldt">正在打开看板…</div></div>
 <template id="dashfb"><!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -84,6 +82,19 @@ html,body{margin:0;height:100%;background:#0b1220;color:#e8edf5;font-family:syst
   .data-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-2);background:var(--panel-2);border:1px solid var(--line);border-radius:20px;padding:4px 12px;white-space:nowrap}
   .data-badge .dot{width:8px;height:8px;border-radius:50%;background:#cbd5e1}
   .data-badge.on .dot{background:var(--green)}
+  .cloud-update-module{min-width:206px;height:40px;display:inline-flex;align-items:center;gap:9px;padding:5px 10px 5px 7px;border:1px solid var(--line);border-radius:8px;background:var(--panel-2);color:var(--ink);white-space:nowrap;transition:border-color .2s ease,background .2s ease}
+  .cloud-update-icon{width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;flex:none;border-radius:6px;background:var(--brand-soft);color:var(--brand)}
+  .cloud-update-icon svg{width:16px;height:16px}
+  .cloud-update-copy{min-width:0;display:flex;flex-direction:column;gap:1px;line-height:1.2}
+  .cloud-update-label{font-size:10.5px;color:var(--muted);letter-spacing:0}
+  .cloud-update-time{font-size:12px;font-weight:650;color:var(--ink);font-variant-numeric:tabular-nums}
+  .cloud-update-state{width:8px;height:8px;margin-left:auto;flex:none;border-radius:50%;background:var(--muted)}
+  .cloud-update-module.is-ready{border-color:color-mix(in srgb,var(--green) 38%,var(--line));background:color-mix(in srgb,var(--green) 7%,var(--panel-2))}
+  .cloud-update-module.is-ready .cloud-update-state{background:var(--green);box-shadow:0 0 0 3px color-mix(in srgb,var(--green) 14%,transparent)}
+  .cloud-update-module.is-syncing .cloud-update-state{background:var(--amber);animation:cloudPulse 1.2s ease-in-out infinite}
+  .cloud-update-module.is-stale .cloud-update-state{background:var(--amber)}
+  .cloud-update-module.is-error .cloud-update-state{background:var(--red)}
+  @keyframes cloudPulse{0%,100%{opacity:.4}50%{opacity:1}}
   .spacer{flex:1 1 auto}
   .tbtn{height:40px;min-width:40px;padding:0 12px;border:1px solid var(--line);background:var(--panel-2);color:var(--ink);border-radius:10px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;position:relative}
   .tbtn:hover{border-color:var(--brand);color:var(--brand)}
@@ -319,8 +330,8 @@ html,body{margin:0;height:100%;background:#0b1220;color:#e8edf5;font-family:syst
   .hide-local .local-only{display:none !important}
   @media (max-width:900px){ .local-only{display:none !important} }
 
-  /* 顶部 topbar 的云端更新徽章已与看板内"数据同步"面板的上次更新时间重复，隐藏 */
-  .data-badge, .data-badge.cloud-badge{display:none !important}
+  /* 本地文件来源只保留在同步面板；云端源数据更新时间固定展示在顶部。 */
+  #dataBadge{display:none !important}
 
   /* 密码锁屏 */
   body.lock{overflow:hidden}
@@ -373,6 +384,10 @@ html,body{margin:0;height:100%;background:#0b1220;color:#e8edf5;font-family:syst
     .topbar-in{padding:8px 12px;gap:8px;min-height:48px}
     .brand span{font-size:14px}
     .data-badge{display:none}
+    .cloud-update-module{order:5;flex:1 0 100%;min-width:0;height:34px;padding:4px 8px;gap:8px}
+    .cloud-update-icon{width:24px;height:24px}
+    .cloud-update-label{font-size:10px}
+    .cloud-update-time{font-size:11.5px}
     .tbtn span{display:none}
     .tbtn,.tbtn.icon{height:38px;min-width:38px;padding:0;justify-content:center}
     .wrap{padding:0 12px 92px;max-width:100%}
@@ -725,38 +740,18 @@ html,body{margin:0;height:100%;background:#0b1220;color:#e8edf5;font-family:syst
   .switch button{padding:6px 12px;border:1px solid var(--border);background:var(--panel-2);color:var(--muted);border-radius:8px;cursor:pointer;font-size:13px}
   .switch button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
   /* 经营分析（图表化 · 父子集） */
-  .ana-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:12px 14px}
-  .ana-breadcrumb{display:flex;align-items:center;gap:8px;min-width:0;flex:1 1 auto;flex-wrap:wrap}
-  .ana-bc-lbl{font-size:12px;color:var(--muted);font-weight:600;white-space:nowrap}
-  .ana-bc-val{font-size:14px;font-weight:700;color:var(--accent);white-space:nowrap}
-  .ana-clear{padding:3px 10px;border-radius:12px;border:1px solid var(--border);background:var(--panel-2);color:var(--muted);font-size:11.5px;cursor:pointer;line-height:1.4}
-  .ana-clear:hover{background:var(--red);color:#fff;border-color:var(--red)}
-  .ana-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-  .ana-scope-card{padding:12px 14px}
-  .ana-scope-row{margin-bottom:6px}
-  .ana-scope-row:last-child{margin-bottom:0}
-  .ana-row-label{display:inline-block;font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.5px;margin-right:6px;vertical-align:middle}
-  .ana-divider{position:relative;height:1px;background:repeating-linear-gradient(90deg,var(--border) 0 6px,transparent 6px 12px);margin:8px 0 4px}
-  .ana-divider .ana-row-label{position:absolute;left:12px;top:50%;transform:translateY(-50%);background:var(--panel);padding:0 8px}
-  .ana-scope{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:4px}
-  .ana-chip{padding:5px 11px;border:1px solid var(--border);background:var(--panel-2);color:var(--muted);border-radius:14px;cursor:pointer;font-size:12px;white-space:nowrap;line-height:1.3;transition:all .12s}
-  .ana-chip:hover{border-color:var(--accent);color:var(--text)}
-  .ana-chip .chip-mini{opacity:.6;font-size:10px;margin-left:5px;font-weight:500}
-  .ana-chip.on{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 1px 3px rgba(91,143,249,.3)}
-  .ana-chip.on .chip-mini{opacity:.9;color:rgba(255,255,255,.85)}
+  .ana-scope{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .ana-chip{padding:6px 13px;border:1px solid var(--border);background:var(--panel-2);color:var(--muted);border-radius:16px;cursor:pointer;font-size:12.5px;white-space:nowrap;line-height:1.3}
+  .ana-chip .chip-mini{opacity:.65;font-size:10.5px;margin-left:4px}
+  .ana-chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .ana-chip.on .chip-mini{opacity:.85}
+  .ana-children{margin-top:9px;padding-top:9px;border-top:1px dashed var(--border)}
   .ana-charts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
   .ana-charts .chart-wrap:first-child{grid-column:1/-1}
   #anaStack{min-height:230px}
   #anaTrend{min-height:240px}
   @media(max-width:768px){.ana-charts{grid-template-columns:1fr}}
 
-  /* 新版本提示条（加载器 v3 后台发现新版时显示） */
-  .new-version-bar{position:sticky;top:0;z-index:100;background:linear-gradient(90deg,var(--accent),var(--accent-dark));color:#232f3e;padding:10px 16px;display:flex;align-items:center;justify-content:center;gap:14px;font-size:13px;font-weight:600;box-shadow:0 4px 12px rgba(255,153,0,.25)}
-  .new-version-bar span{white-space:nowrap}
-  .new-version-bar button{height:28px;padding:0 12px;border:none;border-radius:6px;background:#232f3e;color:#fff;font-size:12px;cursor:pointer;font-weight:600}
-  .new-version-bar button.secondary{background:rgba(255,255,255,.25);color:#232f3e}
-  .new-version-bar button:hover{filter:brightness(1.1)}
-  @media(max-width:680px){.new-version-bar{flex-wrap:wrap;gap:8px;padding:8px 12px;font-size:12px}.new-version-bar span{white-space:normal;text-align:center}}
 
 </style>
 </head>
@@ -801,7 +796,11 @@ html,body{margin:0;height:100%;background:#0b1220;color:#e8edf5;font-family:syst
       <span>AMZ Manager-ZK</span>
     </div>
     <div class="data-badge" id="dataBadge"><span class="dot"></span><span id="dataBadgeText">数据源：本地 Excel</span></div>
-    <div class="data-badge cloud-badge" id="cloudBadge"><span class="dot"></span><span id="cloudBadgeText">☁ 云端更新：—</span></div>
+    <div class="cloud-update-module" id="cloudUpdateModule" role="status" aria-live="polite" title="正在获取云端源数据更新时间">
+      <span class="cloud-update-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H7a5 5 0 1 1 1.7-9.7A6 6 0 0 1 20 12a3.5 3.5 0 0 1-2.5 7Z"/></svg></span>
+      <span class="cloud-update-copy"><span class="cloud-update-label">云端源数据</span><span class="cloud-update-time" id="cloudBadgeText">等待同步</span></span>
+      <span class="cloud-update-state" aria-hidden="true"></span>
+    </div>
     <div class="spacer"></div>
     <button class="tbtn icon" id="btnRefresh" title="刷新到最新版本（清除缓存并同步云端）" aria-label="刷新">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
@@ -1014,14 +1013,16 @@ html,body{margin:0;height:100%;background:#0b1220;color:#e8edf5;font-family:syst
 
   <!-- analysis panel（图表化 · 父子集） -->
   <section class="panel" id="panel-analysis">
-    <div class="card ana-toolbar">
-      <div class="ana-breadcrumb">
-        <span class="ana-bc-lbl">当前范围</span>
-        <span class="ana-bc-val" id="anaCrumb">全部父集</span>
-        <button class="ana-clear" id="anaClear" onclick="anaReset()" style="display:none" title="清除下钻">× 清除</button>
+    <div class="card settings-row" id="anaControls">
+      <div class="pd-group">
+        <span class="lbl">粒度</span>
+        <span class="switch" id="anaGran">
+          <button data-g="parent" onclick="anaSetGran('parent')">父集</button>
+          <button data-g="child" onclick="anaSetGran('child')">子集</button>
+        </span>
       </div>
-      <div class="ana-tools">
-        <span class="ana-bc-lbl">指标</span>
+      <div class="pd-group">
+        <span class="lbl">指标</span>
         <span class="switch" id="anaMetric">
           <button data-m="sales" onclick="anaSetMetric('sales')">销售额</button>
           <button data-m="orders" onclick="anaSetMetric('orders')">订单</button>
@@ -1030,18 +1031,13 @@ html,body{margin:0;height:100%;background:#0b1220;color:#e8edf5;font-family:syst
           <button data-m="natOrders" onclick="anaSetMetric('natOrders')">自然订单</button>
           <button data-m="sessions" onclick="anaSetMetric('sessions')">访客</button>
         </span>
-        <button class="rowbtn" onclick="exportAnaCsv()">导出 CSV</button>
       </div>
+      <div class="pd-group"><button class="rowbtn" onclick="exportAnaCsv()">导出 CSV</button></div>
     </div>
-    <div class="card ana-scope-card">
-      <div class="ana-scope-row">
-        <span class="ana-row-label">父体</span>
-        <div class="ana-scope" id="anaParents"></div>
-      </div>
-      <div class="ana-scope-row" id="anaChildrenRow" style="display:none">
-        <div class="ana-divider"><span class="ana-row-label">子体</span></div>
-        <div class="ana-scope" id="anaChildren"></div>
-      </div>
+    <div class="card" style="margin-top:10px">
+      <h3 style="margin-bottom:8px"><span id="anaScopeTitle">产品范围</span><span class="mini" id="anaScopeHint"></span></h3>
+      <div class="ana-scope" id="anaParents"></div>
+      <div class="ana-scope ana-children" id="anaChildren" style="display:none"></div>
     </div>
     <div class="kpis" id="anaKpis"></div>
     <div class="ana-charts">
@@ -1275,18 +1271,6 @@ html,body{margin:0;height:100%;background:#0b1220;color:#e8edf5;font-family:syst
           <div id="dataBaseUrlMsg" style="margin-top:8px;font-size:13px;color:var(--muted)"></div>
         </div>
       </details>
-      <details class="fold-tip dismissible" data-tip-key="sync-data-key" style="margin-top:10px">
-        <summary>🔐 数据访问密钥（私有数据仓库专用）</summary>
-        <div class="hint" style="display:block;margin-top:6px">
-          <p>运营数据已移入<b>私有仓库</b>（amz-private-data），只有输入密钥才能拉取，陌生人打开看板看不到任何数据。<b>密钥 = GitHub 只读 token</b>：GitHub → 头像 → Settings → Developer settings → Personal access tokens → <b>Fine-grained tokens</b> → Generate new token（Repository access 只勾选 amz-private-data，Permissions 里 Contents 选 <b>Read-only</b>）。密钥只保存在<b>本浏览器</b>，不会上传。</p>
-          <input id="dataKeyInput" type="password" placeholder="github_pat_...（只读 token，仅本浏览器保存）" style="width:100%;padding:8px;margin-top:6px;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;background:var(--bg2);color:var(--fg)"/>
-          <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
-            <button class="imp-btn" onclick="saveDataKey()">💾 保存密钥</button>
-            <button class="imp-btn" onclick="testDataKey()">🔗 测试连接</button>
-          </div>
-          <div id="dataKeyMsg" style="margin-top:8px;font-size:13px;color:var(--muted)"></div>
-        </div>
-      </details>
       <div id="importPreview" class="hidden"></div>
       <div class="backup-tip dismissible" data-tip-key="sync-cloud-tip" style="margin-top:10px">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -1421,7 +1405,7 @@ const K={tasks:PREFIX+"tasks",stock:PREFIX+"stock",ad:PREFIX+"ad",perf:PREFIX+"p
   adTarget:PREFIX+"adTarget",ack:PREFIX+"ack",init:PREFIX+"init",lastSync:PREFIX+"lastSync",
   timeRange:PREFIX+"timeRange",salesTargetDaily:PREFIX+"salesTargetDaily",salesTargetCvr:PREFIX+"salesTargetCvr",
   invWindow:PREFIX+"invWindow",invTargetMonths:PREFIX+"invTargetMonths",invSafety:PREFIX+"invSafety",invReorderDays:PREFIX+"invReorderDays",invStaleDays:PREFIX+"invStaleDays",profitMinMargin:PREFIX+"profitMinMargin",mine:PREFIX+"mine",cloudAuto:PREFIX+"cloudAuto",localSource:PREFIX+"localSource",
-  processedRange:PREFIX+"processedRange",sourceRange:PREFIX+"sourceRange",promo:PREFIX+"promo",promoWindow:PREFIX+"promoWindow",profitDiff:PREFIX+"profitDiff",cloudUploadedAt:PREFIX+"cloudUploadedAt",track:PREFIX+"track",dataBaseUrl:PREFIX+"dataBaseUrl",analysis:PREFIX+"analysis",dataKey:PREFIX+"dataKey"};
+  processedRange:PREFIX+"processedRange",sourceRange:PREFIX+"sourceRange",promo:PREFIX+"promo",promoWindow:PREFIX+"promoWindow",profitDiff:PREFIX+"profitDiff",cloudUploadedAt:PREFIX+"cloudUploadedAt",track:PREFIX+"track",dataBaseUrl:PREFIX+"dataBaseUrl",analysis:PREFIX+"analysis"};
 function load(k,def){try{const v=localStorage.getItem(k);return v?JSON.parse(v):def;}catch(e){return def;}}
 function loadNum(k,def){const v=Number(load(k,def));return isNaN(v)?def:v;}
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){console.warn('localStorage save failed',k,e.message);}}
@@ -1447,49 +1431,6 @@ function dataUrl(path){
 }
 function saveDataBaseUrl(){ const el=document.getElementById('dataBaseUrlInput'); if(!el) return; const v=el.value.trim(); save(K.dataBaseUrl,v); const m=document.getElementById('dataBaseUrlMsg'); if(m) m.textContent='已保存：'+(v||('（空，使用默认 '+DATA_URL_DEFAULT+'）')); toast('远程数据网址已保存'); }
 function testDataBaseUrl(){ const el=document.getElementById('dataBaseUrlInput'); if(el) el.value=(load(K.dataBaseUrl,'')||''); const url=dataUrl('amz-data.json')+'?t='+Date.now(); const m=document.getElementById('dataBaseUrlMsg'); if(m) m.textContent='测试中…'; fetch(url,{cache:'no-store'}).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }).then(j=>{ const n=(j.perf&&j.perf.detail&&j.perf.detail.length)||0; if(m) m.innerHTML='✅ 连接成功，amz-data.json 有效，业绩记录 '+n+' 条。'; toast('远程数据连接正常 ✅'); }).catch(e=>{ if(m) m.innerHTML='⚠️ 连接失败：'+esc(e.message||String(e))+'。请确认网址指向含 amz-data.json 的目录，且该网址允许跨域（CORS）。'; }); }
-
-/* ===================== 私有数据仓库（数据安全） ===================== */
-// 运营数据（amz-data.json / cloud-status.json）已移入私有仓库 PRIVATE_REPO，
-// 看板必须携带「数据访问密钥」（GitHub 只读 token，存于本浏览器 localStorage）才能拉取。
-// 公开仓库只保留看板代码（dashboard.html/index.html/version.json），不含任何运营数据。
-const PRIVATE_REPO='KevinZuo-AMZ/amz-private-data';
-const PRIVATE_API='https://api.github.com/repos/'+PRIVATE_REPO;
-// 带超时与自定义头的 fetch
-function fetchText(url,ms,headers){
-  return new Promise(function(resolve,reject){
-    var ctl=('AbortController' in window)?new AbortController():null;
-    var to=setTimeout(function(){ if(ctl) ctl.abort(); reject(new Error('超时')); },ms||10000);
-    fetch(url, ctl?{signal:ctl.signal,cache:'no-store',headers:headers||{}}:{cache:'no-store',headers:headers||{}}).then(function(r){
-      clearTimeout(to);
-      if(!r.ok) throw new Error('HTTP '+r.status);
-      return r.text();
-    }).then(resolve).catch(reject);
-  });
-}
-// 从私有仓库读取文件内容（git trees + blobs 两步，支持 CORS 与大文件，amz-data.json 约 5MB 无压力）
-function fetchPrivateFile(name,ms){
-  const key=load(K.dataKey,'').trim();
-  if(!key) return Promise.reject(new Error('NO_KEY'));
-  const h={'Authorization':'Bearer '+key,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};
-  return fetchText(PRIVATE_API+'/git/trees/main?recursive=1',ms||15000,h).then(function(txt){
-    var t; try{ t=JSON.parse(txt); }catch(e){ throw new Error('TREE_JSON'); }
-    if(t.message) throw new Error(t.message);
-    var node=(t.tree||[]).find(function(n){return n.path===name&&n.type==='blob';});
-    if(!node) throw new Error('NOT_FOUND:'+name);
-    return fetchText(PRIVATE_API+'/git/blobs/'+node.sha,ms||30000,h);
-  }).then(function(txt){
-    var b; try{ b=JSON.parse(txt); }catch(e){ throw new Error('BLOB_JSON'); }
-    if(b.encoding==='base64'){
-      var bin=atob(b.content);
-      var bytes=new Uint8Array(bin.length);
-      for(var i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
-      return new TextDecoder('utf-8').decode(bytes);
-    }
-    return b.content||'';
-  });
-}
-function saveDataKey(){ const el=document.getElementById('dataKeyInput'); if(!el) return; const v=el.value.trim(); if(v){ save(K.dataKey,v); } else { try{ localStorage.removeItem(K.dataKey); }catch(e){} } const m=document.getElementById('dataKeyMsg'); if(m) m.textContent=v?('✅ 已保存。密钥仅存于本浏览器 localStorage，不上传。'):('已清除密钥，看板将只展示本机缓存数据。'); toast(v?'数据访问密钥已保存':'已清除数据访问密钥'); }
-function testDataKey(){ const el=document.getElementById('dataKeyInput'); const m=document.getElementById('dataKeyMsg'); if(!el){ if(m) m.textContent='⚠️ 找不到输入框'; return; } const v=el.value.trim(); if(!v){ if(m) m.textContent='⚠️ 请先粘贴密钥再测试'; return; } if(m) m.textContent='⏳ 测试中…'; const saved=load(K.dataKey,'').trim(); if(saved&&saved!==v){ save(K.dataKey,v); } fetchPrivateFile('cloud-status.json',12000).then(function(txt){ let s; try{ s=JSON.parse(txt); }catch(e){ throw new Error('STATUS_JSON'); } if(m) m.innerHTML='✅ 连接成功，私有仓库可读。最近上传：'+(s&&s.uploadedAt?esc(new Date(s.uploadedAt).toLocaleString('zh-CN')):'未知'); toast('私有数据连接正常 ✅'); if(!saved){ save(K.dataKey,v); } }).catch(function(e){ if(m) m.innerHTML='⚠️ 连接失败：'+esc((e&&e.message)||String(e))+'。请确认：①密钥有效（github_pat_ 开头）②已授予 amz-private-data 仓库 Contents 只读权限。'; }); }
 
 /* ===================== 我的产品（白名单过滤） ===================== */
 const MINE_CIPHER="AMZ-ZK-MINE-V1";
@@ -2769,7 +2710,7 @@ function renderInventory(){
 /* ===================== 经营分析（图表化 · 父子集，源-产品表现 156 列） ===================== */
 const ANA_PALETTE=['#5b8ff9','#61ddaa','#f6bd16','#e8684a','#6dc8ec','#9270ca','#ff9d4d','#269a99','#b7c1d4','#d9718a'];
 const ANA_METRICS={sales:{l:'销售额',c:'--brand'},orders:{l:'订单量',c:'--brand'},gross:{l:'毛利额',c:'--green'},adSpend:{l:'广告花费',c:'--amber'},natOrders:{l:'自然订单',c:'--green'},sessions:{l:'访客',c:'--accent'}};
-function anaState(){ return Object.assign({metric:'sales',scope:'',child:'',adMode:'acos'}, load(K.analysis,{})); }
+function anaState(){ return Object.assign({gran:'parent',metric:'sales',scope:'',child:'',adMode:'acos'}, load(K.analysis,{})); }
 function anaSave(st){ save(K.analysis,st); }
 let ANA_NM=null;
 const anaPName=p=>{ const m=(ANA_NM&&ANA_NM.parentName)||{}; return m[p]||p; };
@@ -2841,7 +2782,7 @@ function anaStackData(){
 }
 function anaScopeLabel(){
   const st=anaState();
-  if(!st.scope) return '全部父集';
+  if(!st.scope) return st.gran==='parent'?'全部父集':'子集视图·请先选父体';
   let s=anaPName(st.scope);
   if(st.child) s+=' / '+anaCName(st.child);
   return s;
@@ -2850,21 +2791,22 @@ function anaRenderScope(){
   const st=anaState();
   const parents=anaAggRows('parent');
   const total=parents.reduce((a,r)=>a+r.sales,0);
-  $("#anaCrumb").textContent=anaScopeLabel();
-  $("#anaClear").style.display=st.scope?'inline-flex':'none';
+  const hint=st.scope?('已下钻：'+anaPName(st.scope)):(st.gran==='child'?'点击父体下钻，再选其子体':'点击父体查看其子体明细');
+  $("#anaScopeHint").textContent=hint;
   $("#anaParents").innerHTML=`<button class="ana-chip ${!st.scope?'on':''}" onclick="anaPickScope('')">全部</button>`+
     parents.map(r=>{const pct=total?Math.round(r.sales/total*100):0;return `<button class="ana-chip ${st.scope===r.key?'on':''}" onclick="anaPickScope('${r.key}')">${esc(anaPName(r.key))}<span class="chip-mini">${money(r.sales)} · ${pct}%</span></button>`;}).join('');
-  const childRow=$("#anaChildrenRow");
+  const childWrap=$("#anaChildren");
   if(st.scope){
     const children=anaAggRows('child');
     const ct=children.reduce((a,r)=>a+r.sales,0);
-    $("#anaChildren").innerHTML=`<button class="ana-chip ${!st.child?'on':''}" onclick="anaPickChild('')">全部子体</button>`+
+    childWrap.innerHTML=`<button class="ana-chip ${!st.child?'on':''}" onclick="anaPickChild('')">全部子体</button>`+
       children.map(r=>{const pct=ct?Math.round(r.sales/ct*100):0;return `<button class="ana-chip ${st.child===r.key?'on':''}" onclick="anaPickChild('${r.key}')">${esc(anaCName(r.key))}<span class="chip-mini">${money(r.sales)} · ${pct}%</span></button>`;}).join('');
-    childRow.style.display='block';
-  } else { childRow.style.display='none'; }
+    childWrap.style.display='flex';
+  } else { childWrap.style.display='none'; }
 }
 function renderAnalysis(){
   const st=anaState(); ANA_NM=getNameMaps();
+  $$('#anaGran button').forEach(b=>b.classList.toggle('on',b.dataset.g===st.gran));
   $$('#anaMetric button').forEach(b=>b.classList.toggle('on',b.dataset.m===st.metric));
   $$('#anaAdSwitch button').forEach(b=>b.classList.toggle('on',b.dataset.a===st.adMode));
   anaRenderScope();
@@ -2905,7 +2847,7 @@ function renderAnalysis(){
   const adVal=adRows.map(r=>st.adMode==='acos'?(r.acos*100):r.roas);
   renderChart("anaAd",hbarCfg(adLabels,adVal,adRows.map((_,i)=>ANA_PALETTE[i%ANA_PALETTE.length])));
   const tableRows=st.scope?anaAggRows('child'):anaAggRows('parent');
-  const isP=!st.scope;
+  const isP=st.scope?false:(st.gran==='parent');
   const heads=isP?['父体','父ASIN','销售额','订单','销量','毛利','毛利率','CVR','ACOS','ROAS','自然订单','日均销售额']
     :['子体','子ASIN','销售额','订单','销量','毛利','毛利率','CVR','ACOS','ROAS','自然订单','日均销售额'];
   const body=tableRows.map(r=>`<tr>
@@ -2916,19 +2858,19 @@ function renderAnalysis(){
     <td>${fmt(r.naturalOrders)}</td><td>${money(r.n?r.sales/r.n:0)}</td>
   </tr>`).join('');
   $("#anaTable").innerHTML=`<thead><tr>${heads.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${body||'<tr><td colspan="12" class="empty">当前范围内暂无数据</td></tr>'}</tbody>`;
-  const ttl=st.scope?('子体明细（父体：'+anaPName(st.scope)+(st.child?' / '+anaCName(st.child):'')+'）'):'父集明细（全部父体）';
+  const ttl=(st.scope?'子体明细（父体：'+anaPName(st.scope)+(st.child?' / '+anaCName(st.child):'')+'）':(st.gran==='child'?'子集视图：请先点击上方父体下钻（下表暂列父体）':'父集明细'))+' · '+anaScopeLabel();
   $("#anaTableTitle").textContent=ttl;
   $("#anaTableScope").textContent=tableRows.length+' 行';
 }
+function anaSetGran(g){ const st=anaState(); st.gran=g; if(g==='parent') st.child=''; anaSave(st); renderAnalysis(); }
 function anaSetMetric(m){ const st=anaState(); st.metric=m; anaSave(st); renderAnalysis(); }
 function anaSetAdMode(a){ const st=anaState(); st.adMode=a; anaSave(st); renderAnalysis(); }
 function anaPickScope(s){ const st=anaState(); st.scope=s; st.child=''; anaSave(st); renderAnalysis(); }
 function anaPickChild(c){ const st=anaState(); st.child=c; anaSave(st); renderAnalysis(); }
-function anaReset(){ const st=anaState(); st.scope=''; st.child=''; anaSave(st); renderAnalysis(); }
 function exportAnaCsv(){
   const st=anaState();
-  const isP=!st.scope;
-  const rows=isP?anaAggRows('parent'):anaAggRows('child');
+  const rows=st.scope?anaAggRows('child'):anaAggRows('parent');
+  const isP=st.scope?false:(st.gran==='parent');
   const head=['名称','ASIN','销售额','订单量','销量','毛利额','毛利率','CVR','ACOS','ROAS','自然订单','日均销售额'];
   const lines=[head.join(',')].concat(rows.map(r=>[
     '"'+((isP?anaPName(r.key):anaCName(r.key))||'').replace(/"/g,'""')+'"',r.key,
@@ -2938,8 +2880,7 @@ function exportAnaCsv(){
     (r.naturalOrders||0),(r.n?r.sales/r.n:0).toFixed(2)
   ].join(',')));
   const blob=new Blob(["\ufeff"+lines.join("\r\n")],{type:'text/csv;charset=utf-8'});
-  const suffix=isP?'全店父体':(st.child?'子体明细':(anaPName(st.scope)+'的子体'));
-  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download='经营分析_'+suffix+'_'+dateKey(getTimeRange().start)+'.csv';a.click();
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download='经营分析_'+(isP?'父集':'子集')+'_'+dateKey(getTimeRange().start)+'.csv';a.click();
   toast('已导出经营分析 CSV');
 }
 
@@ -4519,10 +4460,59 @@ function renderSync(){
   st.className="empty";
   st.innerHTML='上次更新：<b>'+esc(ls.at?new Date(ls.at).toLocaleString("zh-CN"):"")+'</b><br>来源：<b>'+esc(ls.source||"")+'</b>';
 }
-function updateCloudBadge(){
+function formatCloudUpdateTime(at){
+  if(!at) return '';
+  var d=new Date(at);
+  if(isNaN(d.getTime())) return '';
+  return d.toLocaleString('zh-CN',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false});
+}
+function updateCloudBadge(state){
   var at=load(K.cloudUploadedAt,null);
+  var box=document.getElementById('cloudUpdateModule');
   var el=document.getElementById('cloudBadgeText');
-  if(el){ el.textContent = at ? ('☁ 云端更新：'+new Date(at).toLocaleString('zh-CN')) : '☁ 云端更新：—'; }
+  if(!box||!el) return;
+  state=state||(at?'ready':'idle');
+  box.classList.remove('is-ready','is-syncing','is-stale','is-error');
+  if(state!=='idle') box.classList.add('is-'+state);
+  var formatted=formatCloudUpdateTime(at);
+  if(state==='syncing') el.textContent=formatted?('检查中 · '+formatted):'正在检查更新…';
+  else if(formatted) el.textContent='更新于 '+formatted;
+  else if(state==='error') el.textContent='暂未获取更新时间';
+  else el.textContent='等待云端同步';
+  box.title=formatted?('源数据上传时间：'+formatted):(state==='error'?'云端状态暂时不可用':'等待云端源数据同步');
+}
+
+var cloudStatusWatchTimer=null;
+var cloudStatusWatchBusy=false;
+function checkCloudStatusUpdate(){
+  if(location.protocol==='file:'||document.hidden||cloudStatusWatchBusy) return;
+  cloudStatusWatchBusy=true;
+  var previous=load(K.cloudUploadedAt,'');
+  var ts='?t='+Date.now();
+  cloudFetchText(dataUrl('cloud-status.json')+ts,8000).then(function(txt){
+    var status=JSON.parse(txt);
+    var next=status&&status.uploadedAt?status.uploadedAt:'';
+    if(!next) throw new Error('NO_UPLOADED_AT');
+    var changed=!!previous&&next!==previous;
+    save(K.cloudUploadedAt,next);
+    updateCloudBadge('ready');
+    if(changed){
+      toast('检测到云端源数据更新，正在同步…');
+      syncFromCloud(true);
+    }
+  }).catch(function(err){
+    updateCloudBadge(previous?'stale':'error');
+    console.warn('云端更新时间检查失败:',err);
+  }).finally(function(){ cloudStatusWatchBusy=false; });
+}
+function startCloudStatusWatcher(){
+  if(location.protocol==='file:') return;
+  if(cloudStatusWatchTimer) clearInterval(cloudStatusWatchTimer);
+  cloudStatusWatchTimer=setInterval(checkCloudStatusUpdate,60000);
+  if(!window.__cloudStatusVisibilityBound){
+    window.__cloudStatusVisibilityBound=true;
+    document.addEventListener('visibilitychange',function(){ if(!document.hidden) checkCloudStatusUpdate(); });
+  }
 }
 
 /* ===================== 渲染：促销（价格与促销） ===================== */
@@ -4768,8 +4758,8 @@ function renderAll(){
   const cnt=s.inventory.length+s.products.length+s.ads.length+load(K.searchTerms,[]).length+load(K.plan,[]).length;
   const dot=$("#exportDot");
   if(cnt>=20){ if(dot) dot.classList.add("show"); } else { if(dot) dot.classList.remove("show"); }
-  const key=load(K.dataKey,'').trim();
-  $("#footInfo").textContent = `数据源：私有云同步 · ${key?PRIVATE_REPO:'未配置密钥（仅本机缓存）'}`;
+  const baseUrl = load(K.dataBaseUrl, '') || DATA_URL_DEFAULT;
+  $("#footInfo").textContent = `数据源：云端同步 · ${baseUrl}`;
   updateRangeText();
 }
 
@@ -4902,44 +4892,52 @@ function cloudFetchText(url,ms){
 }
 function syncFromCloud(silent){
   const st=document.getElementById('syncStatus');
-  const key=load(K.dataKey,'').trim();
-  if(!key){
-    if(st){st.className='empty';st.innerHTML='🔒 <b>数据已私有化</b>：请在「数据同步」面板填入<b>数据访问密钥</b>（GitHub 只读 token）并保存，才能拉取运营数据。当前展示本机缓存。';}
-    if(!silent) toast('请先在「数据同步」配置数据访问密钥');
-    return;
-  }
-  if(st){st.className='empty';st.innerHTML='⏳ 正在连接私有数据仓库…';}
+  if(st){st.className='empty';st.innerHTML='⏳ 正在连接云端…';}
+  updateCloudBadge('syncing');
+  const ts='?t='+Date.now(); // cache-bust，确保拿到最新发布
   const done=()=>{};
-  fetchPrivateFile('cloud-status.json',8000).then(txt=>{
+  cloudFetchText(dataUrl('cloud-status.json')+ts,8000).then(txt=>{
     let status; try{ status=JSON.parse(txt); }catch(e){ throw new Error('STATUS_JSON'); }
     const uploaded=status&&status.uploadedAt?new Date(status.uploadedAt).toLocaleString('zh-CN'):'未知';
     const fileCount=status&&status.count!=null?status.count:(status.files||[]).length;
-    try{ if(status&&status.uploadedAt){ save(K.cloudUploadedAt,status.uploadedAt); updateCloudBadge(); } }catch(e){}
-    if(!silent) toast('☁ 私有数据源确认 ✅（'+fileCount+' 个文件，'+uploaded+'）');
-    if(st){st.innerHTML='⏳ 私有数据源已确认，正在读取 amz-data.json…';}
-    return doCloudJsonSync(silent,st,status).finally(done);
+    try{ if(status&&status.uploadedAt){ save(K.cloudUploadedAt,status.uploadedAt); updateCloudBadge('ready'); } }catch(e){}
+    if(!silent) toast('☁ 云端源数据上传成功 ✅（'+fileCount+' 个文件，'+uploaded+'）');
+    if(st){st.innerHTML='⏳ 云端源数据已确认，正在读取 amz-data.json…';}
+    return doCloudJsonSync(silent,st,ts,status).finally(done);
   }).catch(err=>{
-    console.warn('cloud-status.json 读取失败，直接读取 amz-data.json:',err);
-    if(st){st.innerHTML='⏳ 未读取到状态文件，直接读取 amz-data.json…';}
-    return doCloudJsonSync(silent,st,null).finally(done);
+    console.warn('cloud-status.json 缺失或失败，回退到 JSON 同步:',err);
+    updateCloudBadge(load(K.cloudUploadedAt,'')?'stale':'error');
+    if(st){st.innerHTML='⏳ 未检测到云端源文件状态，直接读取 amz-data.json…';}
+    return doCloudJsonSync(silent,st,ts,null).finally(done);
   });
 }
-function doCloudJsonSync(silent,st,status){
+function doCloudJsonSync(silent,st,ts,status){
   const uploadedAt=(status&&status.uploadedAt)?status.uploadedAt:load(K.cloudUploadedAt,'');
-  return fetchPrivateFile('amz-data.json',30000).then(txt=>{ let backup; try{ backup=JSON.parse(txt); }catch(e){ throw new Error('BAD_JSON'); } return backup; }).then(backup=>{
-    if(!backup||(!normDetail(backup.perf).length&&!(backup.stock||[]).length&&!normDetail(backup.ad).length)) throw new Error('私有数据为空');
-    applyCloudData(backup,silent,st,uploadedAt,'私有云同步 amz-data.json');
+  const url=dataUrl('amz-data.json')+ts;
+  return cloudFetchText(url,25000).then(txt=>{ let backup; try{ backup=JSON.parse(txt); }catch(e){ throw new Error('BAD_JSON'); } return backup; }).then(backup=>{
+    if(!backup||(!normDetail(backup.perf).length&&!(backup.stock||[]).length&&!normDetail(backup.ad).length)) throw new Error('云端数据为空');
+    applyCloudData(backup,silent,st,uploadedAt,'云端同步 amz-data.json');
   }).catch(err=>{
-    const msg=(err&&err.message)||String(err);
-    if(msg==='NO_KEY'){
-      if(st){st.className='empty';st.innerHTML='🔒 未配置数据访问密钥，无法拉取私有数据。请在「数据同步」面板填入密钥后重试。当前展示本机缓存。';}
-    }else if(msg.indexOf('HTTP 401')===0||msg.indexOf('HTTP 403')===0||String(msg).indexOf('Bad credentials')>=0){
-      if(st){st.className='empty';st.innerHTML='⚠️ 密钥无效或无权限（'+esc(msg)+'）。请检查密钥是否正确、是否授予了 amz-private-data 仓库只读权限。';}
+    // 远程数据不可达（网络吊死/被墙）→ 回退到部署包内 amz-data.json 副本（随上次发布冻结）
+    const remoteBlocked = url.indexOf(location.origin)!==0 && location.protocol!=='file:';
+    if(remoteBlocked){
+      if(st){st.innerHTML='⚠️ 远程数据不可达（'+(err&&err.message||err)+'），改用部署包内副本…';}
+      console.warn('远程 amz-data.json 失败，回退部署包副本:',err);
+      cloudFetchText('./amz-data.json'+ts,10000).then(txt=>{ let b; try{ b=JSON.parse(txt); }catch(e){ throw new Error('BAD_JSON'); } return b; }).then(b=>{
+        if(!b||(!normDetail(b.perf).length&&!(b.stock||[]).length)) throw new Error('副本数据为空');
+        applyCloudData(b,silent,st,'','部署包内 amz-data.json 副本');
+      }).catch(e2=>{
+        if(st){st.className='empty';st.innerHTML='⚠️ 云端同步失败：远程与部署包副本均不可达（'+((e2&&e2.message)||e2)+'）。当前展示的是本机缓存数据。';}
+        updateCloudBadge(load(K.cloudUploadedAt,'')?'stale':'error');
+        if(!silent) toast('云端同步失败，当前为本机缓存数据');
+        console.warn('本地副本同步失败:',e2);
+      });
     }else{
-      if(st){st.className='empty';st.innerHTML='⚠️ 私有数据同步失败：'+esc(msg)+'。当前展示本机缓存数据。';}
+      if(st){st.className='empty';st.innerHTML='⚠️ 云端同步失败：'+(err&&err.message||err)+'。请确认已联网且页面为最新部署版本。';}
+      updateCloudBadge(load(K.cloudUploadedAt,'')?'stale':'error');
+      if(!silent) toast('云端同步失败，请检查网络');
+      console.warn('syncFromCloud 失败:',err);
     }
-    if(!silent) toast('私有数据同步失败，当前为本机缓存数据');
-    console.warn('私有云同步失败:',err);
   });
 }
 function applyCloudData(backup,silent,st,uploadedAt,sourceLabel){
@@ -4950,6 +4948,7 @@ function applyCloudData(backup,silent,st,uploadedAt,sourceLabel){
   save(K.init,1);
   save(K.lastSync,{at:Date.now(),source:sourceLabel,main:sourceLabel.indexOf('副本')>=0?'部署包副本':'云端'});
   const badge=$("#dataBadge"); if(badge){badge.classList.add("on"); $("#dataBadgeText").textContent="已同步 · "+(sourceLabel.indexOf('副本')>=0?'部署包副本':('云端'+(uploadedAt?"  云端更新: "+new Date(uploadedAt).toLocaleString("zh-CN"):"")));}
+  updateCloudBadge(sourceLabel.indexOf('副本')>=0?'stale':'ready');
   const pr=normDetail(backup.perf)||[];
   const perfDays=new Set(pr.map(r=>r.date)).size;
   const mineCnt=loadMineItems().length, planCnt=load(K.plan,[]).length;
@@ -5216,8 +5215,6 @@ function bind(){
   $("#btnPromoCsv").onclick=exportPromoCSV;
   const dib=document.getElementById('dataBaseUrlInput'); if(dib){ const sv=load(K.dataBaseUrl,''); if(sv) dib.value=sv; }
   const dbm=document.getElementById('dataBaseUrlMsg'); if(dbm){ dbm.textContent=load(K.dataBaseUrl,'')?('当前已配置远程网址，看板打开时自动拉取。'):('未手动配置，当前使用默认 GitHub 网址自动拉取最新数据。'); }
-  const dik=document.getElementById('dataKeyInput'); if(dik){ const kv=load(K.dataKey,''); if(kv) dik.value=kv; }
-  const dkm=document.getElementById('dataKeyMsg'); if(dkm){ dkm.textContent=load(K.dataKey,'')?('✅ 已配置数据访问密钥，看板打开时从私有仓库自动拉取最新数据。'):('未配置密钥：看板只能展示本机缓存，无法拉取私有数据。'); }
   pdInit();
 }
 
@@ -5263,42 +5260,14 @@ function initAfterUnlock(){
   // 云端页面：每次打开都自动从云端同步最新数据（SW 已废除、数据直连；手动同步按钮已移除，无需用户操作）。
   if(location.protocol!=='file:'){
     syncFromCloud(true);
+    startCloudStatusWatcher();
   }
   else if(!hasLocalData()){ loadLocalDataFile(); }
-  showNewVersionBar();
-}
-
-function showNewVersionBar(){
-  try{
-    var raw=localStorage.getItem('wb_amz_zk_newVer');
-    if(!raw) return;
-    var nv=JSON.parse(raw);
-    if(!nv || !nv.v || Date.now()-(nv.at||0)>3600000){ try{ localStorage.removeItem('wb_amz_zk_newVer'); }catch(e){} return; }
-    var seconds=30;
-    var bar=document.createElement('div');
-    bar.className='new-version-bar';
-    var msg=document.createElement('span');
-    msg.textContent='发现新版本（'+nv.v+'），'+seconds+' 秒后自动刷新';
-    var btnNow=document.createElement('button');
-    btnNow.textContent='立即刷新';
-    var btnLater=document.createElement('button');
-    btnLater.className='secondary';
-    btnLater.textContent='稍后再说';
-    bar.appendChild(msg); bar.appendChild(btnNow); bar.appendChild(btnLater);
-    document.body.insertBefore(bar,document.body.firstChild);
-    var timer=setInterval(function(){
-      seconds--;
-      if(seconds<=0){ clearInterval(timer); hardRefreshApp(true); return; }
-      msg.textContent='发现新版本（'+nv.v+'），'+seconds+' 秒后自动刷新';
-    },1000);
-    btnNow.onclick=function(){ clearInterval(timer); hardRefreshApp(true); };
-    btnLater.onclick=function(){ clearInterval(timer); try{ localStorage.removeItem('wb_amz_zk_newVer'); }catch(e){} bar.remove(); };
-  }catch(e){ console.warn('newVer bar error',e); }
 }
 
 // PWA 硬刷新：清除 Service Worker 与缓存后重新加载，确保拿到最新部署版本
-function hardRefreshApp(skipConfirm){
-  if(!skipConfirm && !confirm('即将刷新到最新版本：\n1. 清除本机缓存\n2. 重新加载应用\n3. 自动同步云端最新数据\n\n是否继续？')) return;
+function hardRefreshApp(){
+  if(!confirm('即将刷新到最新版本：\n1. 清除本机缓存\n2. 重新加载应用\n3. 自动同步云端最新数据\n\n是否继续？')) return;
   toast('正在刷新到最新版本…');
   sessionStorage.setItem('__amz_zk_hard_refresh','1');
   const clearCaches = ()=>{
@@ -8536,20 +8505,13 @@ if(sessionStorage.getItem('__amz_zk_hard_refresh')==='1'){
 (function(){
   var KEY='wb_amz_zk_dataBaseUrl';
   var FKEY='wb_amz_zk_ldrFailAt';
-  var NVKEY='wb_amz_zk_newVer';
   var DEFAULT='https://raw.githubusercontent.com/KevinZuo-AMZ/kevinzuo-amz.github.io/main';
-  var EMB_VER='20260820.1702-614c1f58';
+  var EMB_VER='20260820.1903-7f126742';
   var ldt=document.getElementById('ldt');
-  var ldp=document.getElementById('ldp');
-  function stat(s,p){ try{ if(ldt) ldt.textContent=s; if(ldp){ldp.style.display=p?'block':'none';ldp.textContent=p||'';} }catch(e){} }
+  function stat(s){ try{ if(ldt) ldt.textContent=s; }catch(e){} }
   function render(html){
-    try{
-      // 用 innerHTML 替换整个文档，避免 document.write 在某些浏览器下旧遮罩残留
-      document.open(); document.write(html); document.close();
-      // 兜底：如果 #ld 仍残留则强制移除
-      var ld=document.getElementById('ld'); if(ld){ try{ ld.parentNode.removeChild(ld); }catch(e){} }
-    }
-    catch(e){ try{ location.replace('./AMZ%20Manager-V1.html'); }catch(e2){} }
+    try{ document.open(); document.write(html); document.close(); }
+    catch(e){ try{ location.replace('./dashboard.html'); }catch(e2){} }
   }
   function embedded(){
     var t=document.getElementById('dashfb');
@@ -8568,36 +8530,42 @@ if(sessionStorage.getItem('__amz_zk_hard_refresh')==='1'){
   }
   // localStorage 与看板 load()/save() 协议一致（JSON 编码），裸字符串也能读（兼容旧值）
   function lsGet(k){ try{ var v=localStorage.getItem(k); if(v==null) return null; try{ return JSON.parse(v); }catch(e){ return v; } }catch(e){ return null; } }
+  function lsSet(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){ try{ localStorage.setItem(k,String(v)); }catch(e2){} } }
   var raw=null;
   try{ raw=lsGet(KEY); }catch(e){}
   var base=((raw==null?'':String(raw)).trim());
+  // 不写 localStorage：看板 dataUrl() 会把「JSON 格式的默认地址」视为污染态删除，
+  // 加载器写回会造成写/删震荡；且 base 有 DEFAULT 兜底，零配置不受影响。
   if(!base) base=DEFAULT;
   var root=base.replace(/\/+$/,'');
 
-  // 第1步：立即秒开内嵌版，用户不等网络
-  stat('正在打开看板…','内置版本');
-  embedded();
-
-  // 第2步：后台检查更新（近期失败过则跳过，避免反复拖慢）
+  // 近 10 分钟内远程检测失败过 → 直接秒开内嵌版，不再干等
   var failAt=0;
   try{ failAt=parseInt(localStorage.getItem(FKEY)||'0',10)||0; }catch(e){}
-  if(Date.now()-failAt<600000) return;
+  if(Date.now()-failAt<600000){ stat('正在打开看板…'); embedded(); return; }
 
-  setTimeout(function(){
-    fetchT(root+'/version.json?t='+Date.now(),3000).then(function(txt){
-      var v='';
-      try{ v=(JSON.parse(txt)||{}).v||''; }catch(e){}
-      if(!v || v===EMB_VER){
+  stat('正在检查更新…');
+  fetchT(root+'/version.json?t='+Date.now(),5000).then(function(txt){
+    var v='';
+    try{ v=(JSON.parse(txt)||{}).v||''; }catch(e){}
+    if(!v || v===EMB_VER){
+      try{ localStorage.removeItem(FKEY); }catch(e){}
+      stat('正在打开看板…'); embedded();
+    }else{
+      stat('发现新版本，正在下载（约7MB，请稍候）…');
+      fetchT(root+'/dashboard.html?t='+Date.now(),30000).then(function(html){
         try{ localStorage.removeItem(FKEY); }catch(e){}
-        try{ localStorage.removeItem(NVKEY); }catch(e){}
-        return;
-      }
-      // 发现新版本：通知 dashboard 显示提示条并自动刷新
-      try{ localStorage.setItem(NVKEY, JSON.stringify({v:v, at:Date.now()})); }catch(e){}
-    }).catch(function(){
-      try{ localStorage.setItem(FKEY,String(Date.now())); }catch(e){}
-    });
-  }, 800);
+        if(html && html.length>500000 && html.indexOf('id="panel-sync"')>-1){ render(html); }
+        else{ embedded(); }
+      }).catch(function(){
+        try{ localStorage.setItem(FKEY,String(Date.now())); }catch(e){}
+        stat('网络较慢，正在用内置版本打开…'); setTimeout(embedded,300);
+      });
+    }
+  }).catch(function(){
+    try{ localStorage.setItem(FKEY,String(Date.now())); }catch(e){}
+    stat('网络不通，正在用内置版本打开…'); setTimeout(embedded,300);
+  });
 })();
 </script>
 </body>

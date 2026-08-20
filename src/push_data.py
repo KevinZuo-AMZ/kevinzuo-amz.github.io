@@ -5,7 +5,7 @@
 1. GITHUB_TOKEN 环境变量；
 2. 仓库根目录 .env；
 3. 已被 Git 忽略的 src/push_config.local.json；
-4. 兼容旧流程的 src/push_config.json（不建议在此保存 token）。
+4. 已被 Git 忽略的 src/push_config.json。
 未配置显式 Token 时，脚本会回退到系统 Git 凭证助手（macOS Keychain）。
 
 脚本只暂存看板源码、构建脚本与发布产物，不暂存任何本地凭证文件。
@@ -23,12 +23,15 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(BASE)
 CFG = os.path.join(BASE, "push_config.json")
 LOCAL_CFG = os.path.join(BASE, "push_config.local.json")
+EXAMPLE_CFG = os.path.join(BASE, "push_config.example.json")
 ENV_FILE = os.path.join(REPO_ROOT, ".env")
 
 PUBLISH_PATHS = [
     ".gitignore",
     ".env.example",
     "src/live-dashboard.html",
+    "src/lingxing_auto.js",
+    "src/push_config.example.json",
     "src/refresh_dashboard.py",
     "src/push_data.py",
     "tests/cloud_update_module.test.cjs",
@@ -38,7 +41,7 @@ PUBLISH_PATHS = [
     "index.html",
     "version.json",
 ]
-SECRET_FILE_NAMES = {".env", "push_config.local.json"}
+SECRET_FILE_NAMES = {".env", "push_config.json", "push_config.local.json"}
 TOKEN_PATTERN = re.compile(r"(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,})")
 TOKEN_VALUE_PATTERN = re.compile(r"^(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,})$")
 
@@ -117,12 +120,13 @@ def main():
         return 2
 
     load_env_file(ENV_FILE)
+    defaults = load_json(EXAMPLE_CFG)
     cfg = load_json(CFG)
     local_cfg = load_json(LOCAL_CFG)
-    repo = (local_cfg.get("repo") or cfg.get("repo") or "").strip()
-    branch = (local_cfg.get("branch") or cfg.get("branch") or "main").strip()
-    tracked_token = (cfg.get("token") or "").strip()
-    token = (os.environ.get("GITHUB_TOKEN") or local_cfg.get("token") or tracked_token or "").strip()
+    repo = (local_cfg.get("repo") or cfg.get("repo") or defaults.get("repo") or "").strip()
+    branch = (local_cfg.get("branch") or cfg.get("branch") or defaults.get("branch") or "main").strip()
+    config_token = (local_cfg.get("token") or cfg.get("token") or "").strip()
+    token = (os.environ.get("GITHUB_TOKEN") or config_token or "").strip()
 
     if not repo:
         print("ERROR: push_config.json 需包含 repo。")
@@ -130,9 +134,6 @@ def main():
     has_token = bool(TOKEN_VALUE_PATTERN.fullmatch(token))
     if token and not has_token:
         print("INFO: 配置中的 Token 是占位值，将尝试使用系统 Git 凭证。")
-    if TOKEN_VALUE_PATTERN.fullmatch(tracked_token):
-        print("WARN: Token 位于受版本控制的 push_config.json；本次不会暂存该文件，建议迁移到 .env。")
-
     required = ["src/live-dashboard.html", "dashboard.html", "index.html", "version.json"]
     missing = [p for p in required if not os.path.exists(os.path.join(REPO_ROOT, p))]
     if missing:

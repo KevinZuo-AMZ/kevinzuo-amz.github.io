@@ -29,12 +29,21 @@ ENV_FILE = os.path.join(REPO_ROOT, ".env")
 PUBLISH_PATHS = [
     ".gitignore",
     ".env.example",
+    "LINGXING_API.md",
+    "requirements-lingxing.txt",
     "src/live-dashboard.html",
+    "src/lingxing_api.py",
+    "src/lingxing_bridge.py",
     "src/lingxing_auto.js",
     "src/push_config.example.json",
     "src/refresh_dashboard.py",
     "src/push_data.py",
+    "src/sync_lingxing_api.py",
     "tests/cloud_update_module.test.cjs",
+    "tests/lingxing_sync_module.test.cjs",
+    "tests/test_lingxing_api.py",
+    "tests/test_lingxing_bridge.py",
+    "tests/test_push_data.py",
     "amz-data.json",
     "cloud-status.json",
     "dashboard.html",
@@ -44,6 +53,10 @@ PUBLISH_PATHS = [
 SECRET_FILE_NAMES = {".env", "push_config.json", "push_config.local.json"}
 TOKEN_PATTERN = re.compile(r"(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,})")
 TOKEN_VALUE_PATTERN = re.compile(r"^(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,})$")
+LINGXING_SECRET_PATTERN = re.compile(
+    r"LINGXING_APP_SECRET[ \t]*=[ \t]*[\"']?[^\"'\s#][^\"'\r\n]*",
+    re.IGNORECASE,
+)
 
 
 def run(cmd, cwd=None, env=None):
@@ -110,6 +123,9 @@ def verify_no_staged_secrets(paths):
         rc, content, _ = git(["show", ":" + path])
         if rc == 0 and TOKEN_PATTERN.search(content):
             print("ERROR: 检测到疑似 GitHub Token，已停止推送。文件:", path)
+            return False
+        if rc == 0 and LINGXING_SECRET_PATTERN.search(content):
+            print("ERROR: 检测到疑似领星 AppSecret，已停止推送。文件:", path)
             return False
     return True
 

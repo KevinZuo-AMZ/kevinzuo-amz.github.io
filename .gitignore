@@ -4,6 +4,7 @@
 !.env.example
 __pycache__/
 *.py[cod]
+.venv/
 src/push_config.json
 src/push_config.local.json
 src/data_host_repo/

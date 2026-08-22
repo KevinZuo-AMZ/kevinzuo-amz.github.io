@@ -322,6 +322,63 @@ html,body{margin:0;height:100%;background:#0b1220;color:#e8edf5;font-family:syst
   .prev-tbl th,.prev-tbl td{border:1px solid var(--border);padding:6px 8px;text-align:left;white-space:nowrap}
   .prev-tbl th{background:var(--brand-soft);color:var(--brand-dark);font-weight:600}
   .row-end{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:6px}
+  .lx-api-card{margin-bottom:12px;border-top:3px solid var(--green)}
+  .lx-api-card h3{padding-left:0;border-left:0;margin-bottom:12px;align-items:center}
+  .lx-title{display:inline-flex;align-items:center;gap:8px;min-width:0}
+  .lx-title svg{width:19px;height:19px;color:var(--green);flex:none}
+  .lx-badge{display:inline-flex;align-items:center;gap:7px;min-height:28px;padding:3px 9px;border:1px solid var(--line);border-radius:8px;background:var(--panel-2);color:var(--muted);font-size:12px;font-weight:600;white-space:nowrap}
+  .lx-badge-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex:none}
+  .lx-badge.is-ready{color:var(--green);border-color:var(--green);background:var(--green-soft)}
+  .lx-badge.is-ready .lx-badge-dot{background:var(--green)}
+  .lx-badge.is-working{color:var(--amber);border-color:var(--amber);background:var(--amber-soft)}
+  .lx-badge.is-working .lx-badge-dot{background:var(--amber);animation:cloudPulse 1.2s ease-in-out infinite}
+  .lx-badge.is-error{color:var(--red);border-color:var(--red);background:var(--red-soft)}
+  .lx-badge.is-error .lx-badge-dot{background:var(--red)}
+  .lx-security-note{display:flex;align-items:flex-start;gap:9px;padding:10px 12px;border-left:3px solid var(--green);background:var(--green-soft);color:var(--ink-2);font-size:12.5px;line-height:1.5}
+  .lx-security-note svg{width:17px;height:17px;color:var(--green);flex:none;margin-top:1px}
+  .lx-form-grid{display:grid;grid-template-columns:minmax(240px,1fr) minmax(240px,1fr);gap:12px;margin-top:14px}
+  .lx-config-grid{display:grid;grid-template-columns:minmax(130px,.45fr) minmax(260px,1.55fr);gap:12px;margin-top:12px}
+  .lx-field{display:flex;flex-direction:column;gap:5px;min-width:0}
+  .lx-field>span,.lx-choice-title{font-size:12px;color:var(--muted);font-weight:600}
+  .lx-field input{width:100%;height:40px;min-width:0;padding:0 11px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);font:inherit;outline:none}
+  .lx-field input:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
+  .lx-secret-input{display:grid;grid-template-columns:minmax(0,1fr) 40px;gap:6px}
+  .lx-icon-btn{width:40px;height:40px;padding:0;border:1px solid var(--line);border-radius:8px;background:var(--panel-2);color:var(--ink-2);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex:none}
+  .lx-icon-btn:hover{border-color:var(--brand);color:var(--brand)}
+  .lx-icon-btn svg{width:17px;height:17px}
+  .lx-choices{border:1px solid var(--line);border-radius:8px;background:var(--panel-2);padding:9px 11px;min-width:0}
+  .lx-choice-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:6px}
+  .lx-check{display:inline-flex;align-items:center;gap:7px;color:var(--ink-2);font-size:12.5px;cursor:pointer;min-height:24px}
+  .lx-check input{width:16px;height:16px;accent-color:var(--green);flex:none}
+  .lx-options{display:flex;gap:10px 18px;flex-wrap:wrap;margin-top:12px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel-2)}
+  .lx-actions{display:grid;grid-template-columns:auto auto minmax(170px,1fr);gap:8px;margin-top:12px}
+  .lx-btn{height:40px;padding:0 13px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);font-size:13px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;white-space:nowrap}
+  .lx-btn:hover{border-color:var(--brand);color:var(--brand)}
+  .lx-btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+  .lx-btn.primary:hover{background:var(--brand-dark);border-color:var(--brand-dark);color:#fff}
+  .lx-btn:disabled,.lx-icon-btn:disabled{opacity:.55;cursor:not-allowed}
+  .lx-btn svg{width:17px;height:17px;flex:none}
+  .lx-result{display:grid;grid-template-columns:auto minmax(0,1fr);gap:5px 10px;align-items:center;min-height:48px;margin-top:12px;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--panel-2)}
+  .lx-result strong{font-size:12.5px;color:var(--ink)}
+  .lx-result span{font-size:12px;color:var(--muted);min-width:0;overflow-wrap:anywhere}
+  .lx-result.is-ready{border-left:3px solid var(--green)}
+  .lx-result.is-working{border-left:3px solid var(--amber)}
+  .lx-result.is-error{border-left:3px solid var(--red)}
+  .lx-setup{margin-top:10px;border-top:1px solid var(--line)}
+  .lx-setup>summary{list-style:none;cursor:pointer;padding:10px 0 0;color:var(--muted);font-size:12px;font-weight:600}
+  .lx-setup>summary::-webkit-details-marker{display:none}
+  .lx-setup>summary::before{content:"▶";display:inline-block;margin-right:6px;font-size:9px;transition:transform .15s}
+  .lx-setup[open]>summary::before{transform:rotate(90deg)}
+  .lx-setup-body{padding-top:9px;color:var(--muted);font-size:12px;line-height:1.55}
+  .lx-code-row{display:grid;grid-template-columns:minmax(0,1fr) 40px;gap:6px;margin-top:7px}
+  .lx-code-row code{display:flex;align-items:center;min-height:40px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--panel-2);color:var(--ink);font-size:12px;overflow-x:auto;white-space:nowrap}
+  @media(max-width:700px){
+    .lx-api-card h3{align-items:flex-start}
+    .lx-form-grid,.lx-config-grid{grid-template-columns:1fr}
+    .lx-actions{grid-template-columns:1fr}
+    .lx-options{display:grid;grid-template-columns:1fr}
+    .lx-result{grid-template-columns:1fr}
+  }
   [data-theme="dark"] .backup-tip,[data-theme="dark"] .hint,[data-theme="dark"] .adopt-empty,[data-theme="dark"] .prev-warn,[data-theme="dark"] .ov-alert{color:var(--muted)}
   [data-theme="dark"] .backup-tip b,[data-theme="dark"] .adopt-empty b,[data-theme="dark"] .hint b,[data-theme="dark"] .ov-alert b{color:var(--ink)}
   [data-theme="dark"] .rec-summary{color:var(--green)}
@@ -379,6 +436,7 @@ html,body{margin:0;height:100%;background:#0b1220;color:#e8edf5;font-family:syst
     .layout{display:block;min-height:auto}
     .sidebar,.sb-backdrop,#sbToggle{display:none!important}
     .main{display:block}
+    body.sync-view .sticky-band{display:none}
     /* 顶部栏：避让刘海/状态栏，紧凑但可点 */
     .topbar{padding-top:env(safe-area-inset-top)}
     .topbar-in{padding:8px 12px;gap:8px;min-height:48px}
@@ -798,7 +856,7 @@ html,body{margin:0;height:100%;background:#0b1220;color:#e8edf5;font-family:syst
     <div class="data-badge" id="dataBadge"><span class="dot"></span><span id="dataBadgeText">数据源：本地 Excel</span></div>
     <div class="cloud-update-module" id="cloudUpdateModule" role="status" aria-live="polite" title="正在获取云端源数据更新时间">
       <span class="cloud-update-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H7a5 5 0 1 1 1.7-9.7A6 6 0 0 1 20 12a3.5 3.5 0 0 1-2.5 7Z"/></svg></span>
-      <span class="cloud-update-copy"><span class="cloud-update-label">云端源数据</span><span class="cloud-update-time" id="cloudBadgeText">等待同步</span></span>
+      <span class="cloud-update-copy"><span class="cloud-update-label" id="cloudBadgeLabel">云端源数据</span><span class="cloud-update-time" id="cloudBadgeText">等待同步</span></span>
       <span class="cloud-update-state" aria-hidden="true"></span>
     </div>
     <div class="spacer"></div>
@@ -1256,6 +1314,66 @@ html,body{margin:0;height:100%;background:#0b1220;color:#e8edf5;font-family:syst
     </div>
   </section>
   <section class="panel" id="panel-sync">
+    <div class="card lx-api-card" id="lingxingApiModule">
+      <h3>
+        <span class="lx-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17V7a2 2 0 0 1 2-2h4"/><path d="M14 5h4a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-4"/><path d="M8 12h8"/><path d="m13 9 3 3-3 3"/></svg>领星 API 接入</span>
+        <span class="lx-badge" id="lxApiBadge"><span class="lx-badge-dot" aria-hidden="true"></span><span id="lxApiBadgeText">未配对</span></span>
+      </h3>
+      <div class="lx-security-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        <span>AppSecret 由本机连接器从项目 <code>.env</code> 读取；网页不会读取或保存领星凭证。配对码仅保留在当前浏览器标签页。</span>
+      </div>
+      <div class="lx-form-grid">
+        <label class="lx-field">
+          <span>本机连接地址</span>
+          <input id="lxBridgeUrl" type="url" inputmode="url" autocomplete="off" spellcheck="false" value="http://127.0.0.1:8765">
+        </label>
+        <label class="lx-field">
+          <span>本次配对码</span>
+          <span class="lx-secret-input">
+            <input id="lxBridgeKey" type="password" autocomplete="off" spellcheck="false" placeholder="粘贴连接器终端显示的配对码">
+            <button class="lx-icon-btn" id="lxToggleKey" type="button" title="显示配对码" aria-label="显示配对码"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+          </span>
+        </label>
+      </div>
+      <div class="lx-config-grid">
+        <label class="lx-field">
+          <span>回看天数</span>
+          <input id="lxDays" type="number" inputmode="numeric" min="1" max="92" step="1" value="7">
+        </label>
+        <fieldset class="lx-choices">
+          <legend class="lx-choice-title">同步数据集</legend>
+          <div class="lx-choice-row">
+            <label class="lx-check"><input id="lxDatasetPerformance" type="checkbox" value="performance" checked>产品表现、广告与利润</label>
+            <label class="lx-check"><input id="lxDatasetStock" type="checkbox" value="stock" checked>库存与补货</label>
+          </div>
+        </fieldset>
+      </div>
+      <div class="lx-options">
+        <label class="lx-check"><input id="lxIncludeToday" type="checkbox">包含当天未完整数据</label>
+        <label class="lx-check"><input id="lxLoadAfterSync" type="checkbox" checked>同步后载入当前看板</label>
+        <label class="lx-check"><input id="lxPublishAfterSync" type="checkbox">同步成功后发布到 GitHub</label>
+      </div>
+      <div class="lx-actions">
+        <button class="lx-btn" id="lxTestBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1-.1l-2 2A5 5 0 0 0 12 20l1.1-1.1"/></svg>测试连接</button>
+        <button class="lx-btn" id="lxLoadBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>载入本机数据</button>
+        <button class="lx-btn primary" id="lxSyncBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8.1 8.1 0 0 0-15.5-2M4 5v4h4"/><path d="M4 13a8.1 8.1 0 0 0 15.5 2M20 19v-4h-4"/></svg><span id="lxSyncBtnText">立即同步领星数据</span></button>
+      </div>
+      <div class="lx-result" id="lxApiStatus" role="status" aria-live="polite">
+        <strong id="lxApiStatusTitle">等待本机连接</strong>
+        <span id="lxApiStatusMeta">启动连接器后输入本次配对码。</span>
+      </div>
+      <details class="lx-setup">
+        <summary>本机连接器设置</summary>
+        <div class="lx-setup-body">
+          首次使用需按 <code>LINGXING_API.md</code> 配置虚拟环境与项目根目录 <code>.env</code>，之后在项目根目录运行：
+          <div class="lx-code-row">
+            <code id="lxBridgeCommand">.venv/bin/python src/lingxing_bridge.py</code>
+            <button class="lx-icon-btn" id="lxCopyCommand" type="button" title="复制启动命令" aria-label="复制启动命令"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg></button>
+          </div>
+        </div>
+      </details>
+    </div>
     <div class="card">
       <h3><span>数据同步</span></h3>
       <div id="syncStatus" class="empty" style="margin-top:14px">本看板已开启自动云端同步：每天 15:05 由「每日看板同步」自动化下载报表 → 刷新数据 → 推送到下方的远程网址，看板打开即最新，无需任何手动操作。</div>
@@ -1405,7 +1523,8 @@ const K={tasks:PREFIX+"tasks",stock:PREFIX+"stock",ad:PREFIX+"ad",perf:PREFIX+"p
   adTarget:PREFIX+"adTarget",ack:PREFIX+"ack",init:PREFIX+"init",lastSync:PREFIX+"lastSync",
   timeRange:PREFIX+"timeRange",salesTargetDaily:PREFIX+"salesTargetDaily",salesTargetCvr:PREFIX+"salesTargetCvr",
   invWindow:PREFIX+"invWindow",invTargetMonths:PREFIX+"invTargetMonths",invSafety:PREFIX+"invSafety",invReorderDays:PREFIX+"invReorderDays",invStaleDays:PREFIX+"invStaleDays",profitMinMargin:PREFIX+"profitMinMargin",mine:PREFIX+"mine",cloudAuto:PREFIX+"cloudAuto",localSource:PREFIX+"localSource",
-  processedRange:PREFIX+"processedRange",sourceRange:PREFIX+"sourceRange",promo:PREFIX+"promo",promoWindow:PREFIX+"promoWindow",profitDiff:PREFIX+"profitDiff",cloudUploadedAt:PREFIX+"cloudUploadedAt",track:PREFIX+"track",dataBaseUrl:PREFIX+"dataBaseUrl",analysis:PREFIX+"analysis"};
+  processedRange:PREFIX+"processedRange",sourceRange:PREFIX+"sourceRange",promo:PREFIX+"promo",promoWindow:PREFIX+"promoWindow",profitDiff:PREFIX+"profitDiff",cloudUploadedAt:PREFIX+"cloudUploadedAt",track:PREFIX+"track",dataBaseUrl:PREFIX+"dataBaseUrl",analysis:PREFIX+"analysis",
+  lxBridgeUrl:PREFIX+"lxBridgeUrl",lxDays:PREFIX+"lxDays",lxDatasets:PREFIX+"lxDatasets",lxIncludeToday:PREFIX+"lxIncludeToday",lxLoadAfterSync:PREFIX+"lxLoadAfterSync",lxPublish:PREFIX+"lxPublish"};
 function load(k,def){try{const v=localStorage.getItem(k);return v?JSON.parse(v):def;}catch(e){return def;}}
 function loadNum(k,def){const v=Number(load(k,def));return isNaN(v)?def:v;}
 function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){console.warn('localStorage save failed',k,e.message);}}
@@ -1431,6 +1550,250 @@ function dataUrl(path){
 }
 function saveDataBaseUrl(){ const el=document.getElementById('dataBaseUrlInput'); if(!el) return; const v=el.value.trim(); save(K.dataBaseUrl,v); const m=document.getElementById('dataBaseUrlMsg'); if(m) m.textContent='已保存：'+(v||('（空，使用默认 '+DATA_URL_DEFAULT+'）')); toast('远程数据网址已保存'); }
 function testDataBaseUrl(){ const el=document.getElementById('dataBaseUrlInput'); if(el) el.value=(load(K.dataBaseUrl,'')||''); const url=dataUrl('amz-data.json')+'?t='+Date.now(); const m=document.getElementById('dataBaseUrlMsg'); if(m) m.textContent='测试中…'; fetch(url,{cache:'no-store'}).then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }).then(j=>{ const n=(j.perf&&j.perf.detail&&j.perf.detail.length)||0; if(m) m.innerHTML='✅ 连接成功，amz-data.json 有效，业绩记录 '+n+' 条。'; toast('远程数据连接正常 ✅'); }).catch(e=>{ if(m) m.innerHTML='⚠️ 连接失败：'+esc(e.message||String(e))+'。请确认网址指向含 amz-data.json 的目录，且该网址允许跨域（CORS）。'; }); }
+
+/* ===================== 领星 API 本机连接器 ===================== */
+const LX_BRIDGE_DEFAULT='http://127.0.0.1:8765';
+const LX_PAIR_SESSION_KEY=PREFIX+'lingxingBridgeKey';
+function normalizeLingxingBridgeUrl(raw){
+  let parsed;
+  try{ parsed=new URL(String(raw||LX_BRIDGE_DEFAULT).trim()); }
+  catch(e){ throw new Error('本机连接地址格式无效'); }
+  const host=(parsed.hostname||'').toLowerCase();
+  if(parsed.protocol!=='http:'||!['127.0.0.1','localhost','[::1]'].includes(host)||parsed.username||parsed.password){
+    throw new Error('连接地址必须是 http://127.0.0.1、http://localhost 或 IPv6 回环地址');
+  }
+  return parsed.origin;
+}
+function lingxingPairKey(){
+  try{return (sessionStorage.getItem(LX_PAIR_SESSION_KEY)||'').trim();}catch(e){return '';}
+}
+function lingxingDatasetsFromUI(){
+  const values=[];
+  if(document.getElementById('lxDatasetPerformance')&&document.getElementById('lxDatasetPerformance').checked) values.push('performance');
+  if(document.getElementById('lxDatasetStock')&&document.getElementById('lxDatasetStock').checked) values.push('stock');
+  return values;
+}
+function saveLingxingSettings(){
+  const url=document.getElementById('lxBridgeUrl');
+  const days=document.getElementById('lxDays');
+  const includeToday=document.getElementById('lxIncludeToday');
+  const loadAfter=document.getElementById('lxLoadAfterSync');
+  const publish=document.getElementById('lxPublishAfterSync');
+  if(url){ try{ const normalized=normalizeLingxingBridgeUrl(url.value); url.value=normalized; save(K.lxBridgeUrl,normalized); }catch(e){} }
+  if(days) save(K.lxDays,Math.max(1,Math.min(92,Number(days.value)||7)));
+  save(K.lxDatasets,lingxingDatasetsFromUI());
+  if(includeToday) save(K.lxIncludeToday,includeToday.checked?1:0);
+  if(loadAfter) save(K.lxLoadAfterSync,loadAfter.checked?1:0);
+  if(publish) save(K.lxPublish,publish.checked?1:0);
+}
+function setLingxingState(state,title,meta,badgeText){
+  const badge=document.getElementById('lxApiBadge');
+  const badgeLabel=document.getElementById('lxApiBadgeText');
+  const box=document.getElementById('lxApiStatus');
+  const titleEl=document.getElementById('lxApiStatusTitle');
+  const metaEl=document.getElementById('lxApiStatusMeta');
+  const classState=['ready','working','error'].includes(state)?state:'idle';
+  if(badge) badge.className='lx-badge'+(classState==='idle'?'':' is-'+classState);
+  if(box) box.className='lx-result'+(classState==='idle'?'':' is-'+classState);
+  if(badgeLabel) badgeLabel.textContent=badgeText||({ready:'已连接',working:'处理中',error:'连接异常',idle:'未配对'}[classState]);
+  if(titleEl) titleEl.textContent=title||'等待本机连接';
+  if(metaEl) metaEl.textContent=meta||'';
+}
+function setLingxingBusy(busy,label){
+  ['lxTestBtn','lxLoadBtn','lxSyncBtn','lxBridgeUrl','lxBridgeKey','lxDays','lxDatasetPerformance','lxDatasetStock','lxIncludeToday','lxLoadAfterSync','lxPublishAfterSync'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.disabled=!!busy;
+  });
+  const text=document.getElementById('lxSyncBtnText');
+  if(text) text.textContent=busy?(label||'正在处理…'):'立即同步领星数据';
+}
+function lingxingErrorMessage(error){
+  const message=String(error&&error.message||error||'未知错误');
+  if(error&&error.name==='AbortError') return '请求超时，请确认本机连接器仍在运行。';
+  if(/Failed to fetch|NetworkError|Load failed|fetch/i.test(message)){
+    return '无法访问本机连接器。请确认连接器正在运行，并允许浏览器访问本地网络。';
+  }
+  return message;
+}
+async function lingxingRequest(path,method,body,timeoutMs){
+  const urlEl=document.getElementById('lxBridgeUrl');
+  const base=normalizeLingxingBridgeUrl(urlEl?urlEl.value:load(K.lxBridgeUrl,LX_BRIDGE_DEFAULT));
+  const key=lingxingPairKey();
+  if(!key) throw new Error('请输入本机连接器终端显示的本次配对码');
+  if(urlEl) urlEl.value=base;
+  save(K.lxBridgeUrl,base);
+  const controller=('AbortController' in window)?new AbortController():null;
+  const timer=controller?setTimeout(()=>controller.abort(),timeoutMs||15000):null;
+  const options={
+    method:method||'GET',
+    mode:'cors',
+    cache:'no-store',
+    headers:{'Accept':'application/json','X-AMZ-Bridge-Key':key},
+    targetAddressSpace:'loopback'
+  };
+  if(controller) options.signal=controller.signal;
+  if(body!==undefined){
+    options.headers['Content-Type']='application/json';
+    options.body=JSON.stringify(body);
+  }
+  try{
+    const response=await fetch(base+path,options);
+    const raw=await response.text();
+    let payload={};
+    try{ payload=raw?JSON.parse(raw):{}; }
+    catch(e){ throw new Error('本机连接器返回了无法解析的数据'); }
+    if(!response.ok||payload.ok===false){
+      const error=new Error(payload.message||('本机连接器 HTTP '+response.status));
+      error.code=payload.code||'BRIDGE_ERROR';
+      error.payload=payload;
+      throw error;
+    }
+    return payload;
+  }finally{
+    if(timer) clearTimeout(timer);
+  }
+}
+function lingxingCountText(counts){
+  counts=counts||{};
+  return '业绩 '+Number(counts.performance||0)+' 条 · 库存 '+Number(counts.stock||0)+' 条 · 广告 '+Number(counts.ads||0)+' 条 · 利润 '+Number(counts.profit||0)+' 条';
+}
+async function checkLingxingBridge(silent){
+  if(!lingxingPairKey()){
+    if(!silent) setLingxingState('idle','等待本机连接','请输入连接器终端显示的本次配对码。');
+    return null;
+  }
+  if(!silent) setLingxingState('working','正在连接本机服务','正在核对连接器状态与配对码。','连接中');
+  try{
+    const status=await lingxingRequest('/api/status','GET',undefined,10000);
+    const meta=status.credentialsConfigured
+      ? ((status.syncedAt?'本机数据更新于 '+formatCloudUpdateTime(status.syncedAt)+' · ':'')+lingxingCountText(status.counts))
+      : '连接器运行正常，但项目 .env 尚未配置领星凭证。';
+    setLingxingState('ready','本机连接器已配对',meta,status.busy?'同步中':'已连接');
+    return status;
+  }catch(error){
+    setLingxingState('error','本机连接失败',lingxingErrorMessage(error));
+    if(!silent) toast('领星本机连接失败');
+    throw error;
+  }
+}
+async function testLingxingConnection(){
+  saveLingxingSettings();
+  setLingxingBusy(true,'正在测试…');
+  setLingxingState('working','正在测试领星接口','连接器将验证凭证并读取授权店铺。','测试中');
+  try{
+    const result=await lingxingRequest('/api/test','POST',{},90000);
+    setLingxingState('ready','领星接口可用','已读取 '+Number(result.sellerCount||0)+' 个授权店铺，其中 '+Number(result.selectedSellerCount||0)+' 个纳入看板。','接口正常');
+    toast('领星 API 连接测试通过');
+  }catch(error){
+    setLingxingState('error','领星接口测试失败',lingxingErrorMessage(error));
+    toast('领星 API 连接测试失败');
+  }finally{
+    setLingxingBusy(false);
+  }
+}
+async function loadLingxingDataCore(status){
+  status=status||await lingxingRequest('/api/status','GET',undefined,10000);
+  const data=await lingxingRequest('/api/data','GET',undefined,30000);
+  if(!data||(!normDetail(data.perf).length&&!(data.stock||[]).length&&!normDetail(data.ad).length)){
+    throw new Error('本机领星数据为空，未覆盖当前看板');
+  }
+  const syncedAt=status.syncedAt||new Date().toISOString();
+  save(K.cloudUploadedAt,syncedAt);
+  applyCloudData(data,true,document.getElementById('syncStatus'),syncedAt,'领星 API');
+  setLingxingState('ready','本机领星数据已载入',formatCloudUpdateTime(syncedAt)+' · '+lingxingCountText(status.counts),'数据已载入');
+  return status;
+}
+async function loadLingxingData(){
+  saveLingxingSettings();
+  setLingxingBusy(true,'正在载入…');
+  setLingxingState('working','正在读取本机数据','正在加载连接器生成的 amz-data.json。','载入中');
+  try{
+    await loadLingxingDataCore();
+    toast('本机领星数据已载入看板');
+  }catch(error){
+    setLingxingState('error','载入本机数据失败',lingxingErrorMessage(error));
+    toast('本机领星数据载入失败');
+  }finally{
+    setLingxingBusy(false);
+  }
+}
+async function runLingxingSync(){
+  const daysEl=document.getElementById('lxDays');
+  const days=Number(daysEl&&daysEl.value);
+  const datasets=lingxingDatasetsFromUI();
+  const includeToday=!!(document.getElementById('lxIncludeToday')&&document.getElementById('lxIncludeToday').checked);
+  const loadAfter=!!(document.getElementById('lxLoadAfterSync')&&document.getElementById('lxLoadAfterSync').checked);
+  const publish=!!(document.getElementById('lxPublishAfterSync')&&document.getElementById('lxPublishAfterSync').checked);
+  if(!Number.isInteger(days)||days<1||days>92){
+    setLingxingState('error','同步参数无效','回看天数必须是 1 到 92 的整数。');
+    return;
+  }
+  if(!datasets.length){
+    setLingxingState('error','同步参数无效','请至少选择一个同步数据集。');
+    return;
+  }
+  if(publish&&!confirm('本次同步成功后将提交并推送到 GitHub main，线上看板会随之更新。是否继续？')) return;
+  saveLingxingSettings();
+  setLingxingBusy(true,'正在同步…');
+  setLingxingState('working','领星数据同步中','请保持本机连接器终端运行；较长日期范围需要数分钟。','同步中');
+  try{
+    const result=await lingxingRequest('/api/sync','POST',{days:days,datasets:datasets,includeToday:includeToday,publish:publish},32*60*1000);
+    if(loadAfter){
+      await loadLingxingDataCore(result);
+    }else{
+      setLingxingState('ready',result.published?'同步并发布完成':'本机同步完成',formatCloudUpdateTime(result.syncedAt)+' · '+lingxingCountText(result.counts),result.published?'已发布':'同步完成');
+    }
+    toast(result.published?'领星数据已同步并发布':'领星数据同步完成');
+  }catch(error){
+    if(error&&error.payload&&error.payload.syncCompleted&&loadAfter){
+      try{ await loadLingxingDataCore(error.payload); }catch(loadError){ console.warn('同步成功后的本机数据载入失败:',loadError); }
+    }
+    const title=error&&error.code==='PUBLISH_FAILED'?'本机同步完成，GitHub 发布失败':'领星数据同步失败';
+    setLingxingState('error',title,lingxingErrorMessage(error));
+    toast(title);
+  }finally{
+    setLingxingBusy(false);
+  }
+}
+function toggleLingxingKey(){
+  const input=document.getElementById('lxBridgeKey');
+  const button=document.getElementById('lxToggleKey');
+  if(!input||!button) return;
+  const showing=input.type==='text';
+  input.type=showing?'password':'text';
+  button.title=showing?'显示配对码':'隐藏配对码';
+  button.setAttribute('aria-label',button.title);
+  button.innerHTML=showing
+    ?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>'
+    :'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 3 18 18"/><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 4.2A10.5 10.5 0 0 1 12 4c6.5 0 10 8 10 8a16.2 16.2 0 0 1-2.1 3.2"/><path d="M6.6 6.6C3.6 8.4 2 12 2 12s3.5 8 10 8a9.8 9.8 0 0 0 4-.8"/></svg>';
+}
+function initLingxingModule(){
+  const url=document.getElementById('lxBridgeUrl');
+  const key=document.getElementById('lxBridgeKey');
+  const days=document.getElementById('lxDays');
+  const datasets=load(K.lxDatasets,['performance','stock']);
+  if(url) url.value=load(K.lxBridgeUrl,LX_BRIDGE_DEFAULT)||LX_BRIDGE_DEFAULT;
+  if(key) key.value=lingxingPairKey();
+  if(days) days.value=loadNum(K.lxDays,7);
+  if(document.getElementById('lxDatasetPerformance')) document.getElementById('lxDatasetPerformance').checked=!Array.isArray(datasets)||datasets.includes('performance');
+  if(document.getElementById('lxDatasetStock')) document.getElementById('lxDatasetStock').checked=!Array.isArray(datasets)||datasets.includes('stock');
+  if(document.getElementById('lxIncludeToday')) document.getElementById('lxIncludeToday').checked=!!load(K.lxIncludeToday,0);
+  if(document.getElementById('lxLoadAfterSync')) document.getElementById('lxLoadAfterSync').checked=!!load(K.lxLoadAfterSync,1);
+  if(document.getElementById('lxPublishAfterSync')) document.getElementById('lxPublishAfterSync').checked=!!load(K.lxPublish,0);
+  if(key) key.oninput=()=>{
+    try{
+      const value=key.value.trim();
+      if(value) sessionStorage.setItem(LX_PAIR_SESSION_KEY,value); else sessionStorage.removeItem(LX_PAIR_SESSION_KEY);
+    }catch(e){}
+    setLingxingState('idle','等待连接测试',key.value.trim()?'配对码已保留在当前标签页。':'请输入本次配对码。');
+  };
+  [url,days,document.getElementById('lxDatasetPerformance'),document.getElementById('lxDatasetStock'),document.getElementById('lxIncludeToday'),document.getElementById('lxLoadAfterSync'),document.getElementById('lxPublishAfterSync')].forEach(el=>{if(el)el.onchange=saveLingxingSettings;});
+  if(document.getElementById('lxToggleKey')) document.getElementById('lxToggleKey').onclick=toggleLingxingKey;
+  if(document.getElementById('lxTestBtn')) document.getElementById('lxTestBtn').onclick=testLingxingConnection;
+  if(document.getElementById('lxLoadBtn')) document.getElementById('lxLoadBtn').onclick=loadLingxingData;
+  if(document.getElementById('lxSyncBtn')) document.getElementById('lxSyncBtn').onclick=runLingxingSync;
+  if(document.getElementById('lxCopyCommand')) document.getElementById('lxCopyCommand').onclick=()=>copyText(document.getElementById('lxBridgeCommand').textContent);
+  if(lingxingPairKey()) checkLingxingBridge(true).catch(()=>{});
+}
 
 /* ===================== 我的产品（白名单过滤） ===================== */
 const MINE_CIPHER="AMZ-ZK-MINE-V1";
@@ -4455,10 +4818,14 @@ function renderSync(){
   const ls=load(K.lastSync,null);
   const st=$("#syncStatus");
   if(!ls){ return; }
-  const badge=$("#dataBadge"); badge.classList.add("on");
-  $("#dataBadgeText").textContent="已连接 · "+esc(ls.main||"本地 Excel")+(ls.main==='云端'&&ls.at?"  云端更新: "+new Date(ls.at).toLocaleString("zh-CN"):"");
-  st.className="empty";
-  st.innerHTML='上次更新：<b>'+esc(ls.at?new Date(ls.at).toLocaleString("zh-CN"):"")+'</b><br>来源：<b>'+esc(ls.source||"")+'</b>';
+  const badge=$("#dataBadge"); if(badge) badge.classList.add("on");
+  const sourceAt=ls.sourceAt||ls.at;
+  const suffix=(ls.main==='云端'||ls.main==='领星 API')&&sourceAt?"  数据更新: "+new Date(sourceAt).toLocaleString("zh-CN"):"";
+  const badgeText=$("#dataBadgeText"); if(badgeText) badgeText.textContent="已连接 · "+(ls.main||"本地 Excel")+suffix;
+  if(st){
+    st.className="empty";
+    st.innerHTML='上次载入：<b>'+esc(ls.at?new Date(ls.at).toLocaleString("zh-CN"):"")+'</b><br>来源：<b>'+esc(ls.source||"")+'</b>';
+  }
 }
 function formatCloudUpdateTime(at){
   if(!at) return '';
@@ -4468,9 +4835,13 @@ function formatCloudUpdateTime(at){
 }
 function updateCloudBadge(state){
   var at=load(K.cloudUploadedAt,null);
+  var lastSync=load(K.lastSync,null);
+  var isLingxing=!!(lastSync&&lastSync.main==='领星 API');
   var box=document.getElementById('cloudUpdateModule');
+  var label=document.getElementById('cloudBadgeLabel');
   var el=document.getElementById('cloudBadgeText');
   if(!box||!el) return;
+  if(label) label.textContent=isLingxing?'领星 API 数据':'云端源数据';
   state=state||(at?'ready':'idle');
   box.classList.remove('is-ready','is-syncing','is-stale','is-error');
   if(state!=='idle') box.classList.add('is-'+state);
@@ -4479,7 +4850,24 @@ function updateCloudBadge(state){
   else if(formatted) el.textContent='更新于 '+formatted;
   else if(state==='error') el.textContent='暂未获取更新时间';
   else el.textContent='等待云端同步';
-  box.title=formatted?('源数据上传时间：'+formatted):(state==='error'?'云端状态暂时不可用':'等待云端源数据同步');
+  box.title=formatted?((isLingxing?'领星 API 数据更新时间：':'源数据上传时间：')+formatted):(state==='error'?'数据状态暂时不可用':'等待源数据同步');
+}
+function activeLingxingSource(){
+  var lastSync=load(K.lastSync,null);
+  return !!(lastSync&&lastSync.main==='领星 API');
+}
+function lingxingSourceTime(){
+  var lastSync=load(K.lastSync,null);
+  if(!lastSync||lastSync.main!=='领星 API') return 0;
+  var raw=lastSync.sourceAt||lastSync.at||0;
+  var value=typeof raw==='number'?raw:Date.parse(raw);
+  return isNaN(value)?0:value;
+}
+function shouldKeepNewerLingxingData(cloudUploadedAt){
+  if(!activeLingxingSource()) return false;
+  var localAt=lingxingSourceTime();
+  var cloudAt=cloudUploadedAt?Date.parse(cloudUploadedAt):0;
+  return !!localAt&&(!cloudAt||localAt>cloudAt);
 }
 
 var cloudStatusWatchTimer=null;
@@ -4493,6 +4881,10 @@ function checkCloudStatusUpdate(){
     var status=JSON.parse(txt);
     var next=status&&status.uploadedAt?status.uploadedAt:'';
     if(!next) throw new Error('NO_UPLOADED_AT');
+    if(shouldKeepNewerLingxingData(next)){
+      updateCloudBadge('ready');
+      return;
+    }
     var changed=!!previous&&next!==previous;
     save(K.cloudUploadedAt,next);
     updateCloudBadge('ready');
@@ -4759,7 +5151,10 @@ function renderAll(){
   const dot=$("#exportDot");
   if(cnt>=20){ if(dot) dot.classList.add("show"); } else { if(dot) dot.classList.remove("show"); }
   const baseUrl = load(K.dataBaseUrl, '') || DATA_URL_DEFAULT;
-  $("#footInfo").textContent = `数据源：云端同步 · ${baseUrl}`;
+  const lastSync=load(K.lastSync,null);
+  $("#footInfo").textContent = lastSync&&lastSync.main==='领星 API'
+    ? '数据源：领星 API · 本机连接器'
+    : '数据源：云端同步 · '+baseUrl;
   updateRangeText();
 }
 
@@ -4896,8 +5291,13 @@ function syncFromCloud(silent){
   updateCloudBadge('syncing');
   const ts='?t='+Date.now(); // cache-bust，确保拿到最新发布
   const done=()=>{};
-  cloudFetchText(dataUrl('cloud-status.json')+ts,8000).then(txt=>{
+  return cloudFetchText(dataUrl('cloud-status.json')+ts,8000).then(txt=>{
     let status; try{ status=JSON.parse(txt); }catch(e){ throw new Error('STATUS_JSON'); }
+    if(shouldKeepNewerLingxingData(status&&status.uploadedAt)){
+      updateCloudBadge('ready');
+      if(st){st.className='empty';st.innerHTML='当前保留 <b>领星 API 本机数据</b>：其更新时间晚于云端快照。发布或云端数据更新后会自动恢复云端同步。';}
+      return;
+    }
     const uploaded=status&&status.uploadedAt?new Date(status.uploadedAt).toLocaleString('zh-CN'):'未知';
     const fileCount=status&&status.count!=null?status.count:(status.files||[]).length;
     try{ if(status&&status.uploadedAt){ save(K.cloudUploadedAt,status.uploadedAt); updateCloudBadge('ready'); } }catch(e){}
@@ -4906,6 +5306,11 @@ function syncFromCloud(silent){
     return doCloudJsonSync(silent,st,ts,status).finally(done);
   }).catch(err=>{
     console.warn('cloud-status.json 缺失或失败，回退到 JSON 同步:',err);
+    if(activeLingxingSource()){
+      updateCloudBadge('ready');
+      if(st){st.className='empty';st.innerHTML='云端状态暂不可用，继续保留 <b>领星 API 本机数据</b>。';}
+      return;
+    }
     updateCloudBadge(load(K.cloudUploadedAt,'')?'stale':'error');
     if(st){st.innerHTML='⏳ 未检测到云端源文件状态，直接读取 amz-data.json…';}
     return doCloudJsonSync(silent,st,ts,null).finally(done);
@@ -4941,20 +5346,27 @@ function doCloudJsonSync(silent,st,ts,status){
   });
 }
 function applyCloudData(backup,silent,st,uploadedAt,sourceLabel){
-  // 云端数据为权威源：同步前先清空本地业务缓存，防止历史数据/白名单变更后旧记录残留
+  const isBackup=sourceLabel.indexOf('副本')>=0;
+  const isLingxing=sourceLabel.indexOf('领星 API')>=0;
+  const main=isBackup?'部署包副本':(isLingxing?'领星 API':'云端');
+  const parsedSourceAt=uploadedAt?Date.parse(uploadedAt):NaN;
+  const sourceAt=isNaN(parsedSourceAt)?Date.now():parsedSourceAt;
+  // 当前选定数据源为权威源：先清空业务缓存，防止历史记录残留。
   [K.perf,K.stock,K.ad,K.profit,K.searchTerms,K.track,K.promo,K.processedRange,K.sourceRange].forEach(k=>localStorage.removeItem(k));
   mergePartial(backup); // 仅覆盖业务数据（业绩/库存/广告/利润/搜索词/促销），不动 plan/mine/targets 等本地配置
   updateRanges(normDetail(backup.perf));
   save(K.init,1);
-  save(K.lastSync,{at:Date.now(),source:sourceLabel,main:sourceLabel.indexOf('副本')>=0?'部署包副本':'云端'});
-  const badge=$("#dataBadge"); if(badge){badge.classList.add("on"); $("#dataBadgeText").textContent="已同步 · "+(sourceLabel.indexOf('副本')>=0?'部署包副本':('云端'+(uploadedAt?"  云端更新: "+new Date(uploadedAt).toLocaleString("zh-CN"):"")));}
-  updateCloudBadge(sourceLabel.indexOf('副本')>=0?'stale':'ready');
+  save(K.lastSync,{at:Date.now(),source:sourceLabel,main:main,sourceAt:sourceAt});
+  if(isLingxing&&uploadedAt) save(K.cloudUploadedAt,uploadedAt);
+  const badge=$("#dataBadge"); if(badge){badge.classList.add("on"); $("#dataBadgeText").textContent="已同步 · "+main+(uploadedAt?"  数据更新: "+new Date(uploadedAt).toLocaleString("zh-CN"):"");}
+  updateCloudBadge(isBackup?'stale':'ready');
   const pr=normDetail(backup.perf)||[];
   const perfDays=new Set(pr.map(r=>r.date)).size;
   const mineCnt=loadMineItems().length, planCnt=load(K.plan,[]).length;
-  if(st){st.className='empty';st.innerHTML='☁ 已同步最新数据（'+(sourceLabel.indexOf('副本')>=0?'来源：<b>部署包内副本</b>（远程不可达时的兜底）':'来源：<b>云端同步</b>')+'）：业绩 <b>'+perfDays+'</b> 天 · 库存 <b>'+(backup.stock||[]).length+'</b> SKU · 广告 <b>'+normDetail(backup.ad).length+'</b> · 利润 <b>'+normDetail(backup.profit).length+'</b> · 搜索词 <b>'+(backup.searchTerms||[]).length+'</b> · 我的产品 <b>'+mineCnt+'</b> · 规划 <b>'+planCnt+'</b>。';}
-  if(!silent) toast('☁ 云端数据读取成功 ✅ 业绩 '+perfDays+' 天');
   try{ renderAll(); }catch(e){ console.warn('renderAll 渲染异常（数据已同步）:',e); }
+  const sourceDescription=isBackup?'<b>部署包内副本</b>（远程不可达时的兜底）':(isLingxing?'<b>领星 API 本机连接器</b>':'<b>云端同步</b>');
+  if(st){st.className='empty';st.innerHTML='已载入最新数据（来源：'+sourceDescription+'）：业绩 <b>'+perfDays+'</b> 天 · 库存 <b>'+(backup.stock||[]).length+'</b> SKU · 广告 <b>'+normDetail(backup.ad).length+'</b> · 利润 <b>'+normDetail(backup.profit).length+'</b> · 搜索词 <b>'+(backup.searchTerms||[]).length+'</b> · 我的产品 <b>'+mineCnt+'</b> · 规划 <b>'+planCnt+'</b>。';}
+  if(!silent) toast((isLingxing?'领星 API 数据':'云端数据')+'读取成功，业绩 '+perfDays+' 天');
 }
 function exportCloudSnapshot(){
   const snap={perf:load(K.perf,{detail:[]}),stock:load(K.stock,[]),ad:load(K.ad,[]),profit:load(K.profit,{detail:[]}),searchTerms:load(K.searchTerms,[]),promo:load(K.promo,null),track:load(K.track,null)};
@@ -5152,6 +5564,7 @@ function switchTab(name){
   $$(".sb-item").forEach(t=>t.classList.toggle("active",t.dataset.tab===name));
   $$(".bn-item").forEach(t=>t.classList.toggle("active",t.dataset.tab===name));
   $$(".panel").forEach(p=>p.classList.toggle("active",p.id==="panel-"+name));
+  document.body.classList.toggle('sync-view',name==='sync');
   const fb=$("#adoptFilterBarWrap"); if(fb) fb.style.display = (name==='adopt') ? 'block' : 'none';
   // 移动端：「广告」tab 合并展示 广告管理 + 广告优化
   if(window.matchMedia && window.matchMedia('(max-width:900px)').matches){
@@ -5215,6 +5628,7 @@ function bind(){
   $("#btnPromoCsv").onclick=exportPromoCSV;
   const dib=document.getElementById('dataBaseUrlInput'); if(dib){ const sv=load(K.dataBaseUrl,''); if(sv) dib.value=sv; }
   const dbm=document.getElementById('dataBaseUrlMsg'); if(dbm){ dbm.textContent=load(K.dataBaseUrl,'')?('当前已配置远程网址，看板打开时自动拉取。'):('未手动配置，当前使用默认 GitHub 网址自动拉取最新数据。'); }
+  initLingxingModule();
   pdInit();
 }
 
@@ -8506,7 +8920,7 @@ if(sessionStorage.getItem('__amz_zk_hard_refresh')==='1'){
   var KEY='wb_amz_zk_dataBaseUrl';
   var FKEY='wb_amz_zk_ldrFailAt';
   var DEFAULT='https://raw.githubusercontent.com/KevinZuo-AMZ/kevinzuo-amz.github.io/main';
-  var EMB_VER='20260820.1903-7f126742';
+  var EMB_VER='20260822.1245-6d9b3322';
   var ldt=document.getElementById('ldt');
   function stat(s){ try{ if(ldt) ldt.textContent=s; }catch(e){} }
   function render(html){

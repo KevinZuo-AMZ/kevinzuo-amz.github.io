@@ -1,0 +1,17 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+.venv/
+src/push_config.json
+src/push_config.local.json
+src/data_host_repo/
+
+# Codex 本机持久化上下文，不随公开看板仓库发布。
+/AGENTS.md
+/PROJECT_CONTEXT.md
+/DECISIONS.md
+/TASKS.md
+/CHANGELOG.md
